@@ -44,11 +44,10 @@ function entityToPayload(node) {
   node.fields.forEach(f => {
     if (!f.name) return;
     let v = f.value;
-    if (f.type === "Int32" || f.type === "Int64") v = v === "" ? null : Number(v);
-    else if (f.type === "Decimal") v = v === "" ? null : parseFloat(v);
+    if (f.type === "Int32" || f.type === "Int64") v = v === "" ? "" : Number(v);
+    else if (f.type === "Decimal") v = v === "" ? "" : parseFloat(v);
     else if (f.type === "Boolean") v = v === "true" || v === true;
-    else if (v === "") v = null;
-    obj[f.name] = v;
+    obj[f.name] = v === undefined ? "" : v;
   });
   (node.children || []).forEach(child => {
     if (!child.name) return;
